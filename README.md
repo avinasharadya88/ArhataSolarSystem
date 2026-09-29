@@ -107,4 +107,4 @@ python -m uvicorn backend_server:app --port 8000 --reload
 ---
 
 ## 📦 Repository
-- GitHub Repository: [https://github.com/avinasharadya88/ArhataSolarSystem](https://github.com/avinasharadya88/ArhataSolarSystem)
+- GitHub Repository: [https://github.com/avinasharadya88/ECommerce_PS](https://github.com/avinasharadya88/ECommerce_PS)

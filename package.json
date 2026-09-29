@@ -11,16 +11,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/avinasharadya88/ArhataSolarSystem.git"
+    "url": "git+https://github.com/avinasharadya88/ECommerce_PS.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "bugs": {
-    "url": "https://github.com/avinasharadya88/ArhataSolarSystem/issues"
+    "url": "https://github.com/avinasharadya88/ECommerce_PS/issues"
   },
-  "homepage": "https://github.com/avinasharadya88/ArhataSolarSystem#readme",
+  "homepage": "https://github.com/avinasharadya88/ECommerce_PS#readme",
   "dependencies": {
     "autoprefixer": "^10.6.1",
     "clsx": "^2.1.1",
