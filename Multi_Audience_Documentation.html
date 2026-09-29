@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Catalog Health & Returns Hub — Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0E1117;
+    --surface: #161B25;
+    --surface2: #1E2535;
+    --border: #2A3347;
+    --accent: #3B82F6;
+    --accent2: #10B981;
+    --accent3: #F59E0B;
+    --accent4: #8B5CF6;
+    --text: #E8EDF5;
+    --muted: #7A8AA0;
+    --tag-bg: rgba(59,130,246,0.12);
+    --tag-border: rgba(59,130,246,0.3);
+    --green-bg: rgba(16,185,129,0.10);
+    --green-border: rgba(16,185,129,0.28);
+    --amber-bg: rgba(245,158,11,0.10);
+    --amber-border: rgba(245,158,11,0.28);
+    --purple-bg: rgba(139,92,246,0.10);
+    --purple-border: rgba(139,92,246,0.28);
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #F0F4FA;
+      --surface: #FFFFFF;
+      --surface2: #EBF0F8;
+      --border: #D0D9E8;
+      --text: #111827;
+      --muted: #5A6B82;
+      --tag-bg: rgba(59,130,246,0.08);
+      --tag-border: rgba(59,130,246,0.25);
+      --green-bg: rgba(16,185,129,0.07);
+      --green-border: rgba(16,185,129,0.22);
+      --amber-bg: rgba(245,158,11,0.07);
+      --amber-border: rgba(245,158,11,0.22);
+      --purple-bg: rgba(139,92,246,0.07);
+      --purple-border: rgba(139,92,246,0.22);
+    }
+  }
+  *, *::before, *::after { box-sizing: inherit; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── Header ─── */
+  .site-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 clamp(1rem, 5vw, 3rem);
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 100;
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    gap: 1rem;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .logo-mark {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent4) 100%);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .audience-nav {
+    display: flex;
+    gap: 0.25rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .audience-nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding: 0.3rem 0.65rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+    font-family: inherit;
+  }
+  .nav-btn:hover { color: var(--text); border-color: var(--border); }
+  .nav-btn.active {
+    color: var(--accent);
+    border-color: var(--tag-border);
+    background: var(--tag-bg);
+  }
+
+  /* ─── Hero ─── */
+  .hero {
+    border-bottom: 1px solid var(--border);
+    padding: clamp(2.5rem, 6vw, 5rem) clamp(1rem, 5vw, 3rem) clamp(2rem, 4vw, 3.5rem);
+    background: var(--surface);
+  }
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-size: clamp(1.8rem, 4vw, 2.9rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 1rem;
+    max-width: 760px;
+    color: var(--text);
+  }
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 620px;
+    margin: 0 0 2rem;
+    line-height: 1.6;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .stat-num {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .stat-num.blue { color: var(--accent); }
+  .stat-num.green { color: var(--accent2); }
+  .stat-num.amber { color: var(--accent3); }
+
+  /* ─── Audience pill bar ─── */
+  .audience-bar {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem clamp(1rem, 5vw, 3rem);
+  }
+  .audience-bar-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .bar-label {
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-weight: 500;
+    margin-right: 0.25rem;
+    white-space: nowrap;
+  }
+  .pill {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.15s;
+    font-family: inherit;
+    background: var(--surface);
+    color: var(--muted);
+    border-color: var(--border);
+  }
+  .pill:hover { color: var(--text); }
+  .pill.p-kid.active    { background: rgba(16,185,129,0.15); color: var(--accent2); border-color: var(--green-border); }
+  .pill.p-hs.active     { background: rgba(245,158,11,0.15); color: var(--accent3); border-color: var(--amber-border); }
+  .pill.p-college.active { background: var(--tag-bg); color: var(--accent); border-color: var(--tag-border); }
+  .pill.p-eng.active    { background: rgba(139,92,246,0.15); color: var(--accent4); border-color: var(--purple-border); }
+  .pill.p-pm.active     { background: rgba(239,68,68,0.12); color: #EF4444; border-color: rgba(239,68,68,0.28); }
+
+  /* ─── Main layout ─── */
+  .main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: clamp(2rem, 4vw, 3.5rem) clamp(1rem, 5vw, 3rem);
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  @media (max-width: 768px) {
+    .main { grid-template-columns: 1fr; gap: 2rem; }
+    .sidebar { display: none; }
+  }
+
+  /* ─── Sidebar ─── */
+  .sidebar {
+    position: sticky;
+    top: calc(env(safe-area-inset-top, 0px) + 70px);
+  }
+  .toc-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+  .toc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .toc-list li a {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: none;
+    display: block;
+    padding: 0.3rem 0.6rem;
+    border-radius: 5px;
+    border-left: 2px solid transparent;
+    transition: color 0.12s, border-color 0.12s, background 0.12s;
+    line-height: 1.4;
+  }
+  .toc-list li a:hover {
+    color: var(--text);
+    background: var(--surface);
+    border-left-color: var(--border);
+  }
+
+  /* ─── Content sections ─── */
+  .content { min-width: 0; }
+  .audience-section { display: none; }
+  .audience-section.visible { display: block; }
+
+  .section-header {
+    margin-bottom: 2.5rem;
+  }
+  .section-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+  .section-header h2 {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 700;
+    margin: 0 0 0.6rem;
+    line-height: 1.2;
+  }
+  .section-header p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ─── Cards ─── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 1.25rem;
+  }
+  .card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.55rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .card p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.65;
+  }
+  .card p + p { margin-top: 0.6rem; }
+  .card.green-accent { border-left: 3px solid var(--accent2); }
+  .card.blue-accent  { border-left: 3px solid var(--accent); }
+  .card.amber-accent { border-left: 3px solid var(--accent3); }
+  .card.purple-accent { border-left: 3px solid var(--accent4); }
+  .card.red-accent   { border-left: 3px solid #EF4444; }
+
+  /* ─── Lever cards grid ─── */
+  .levers-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  @media (max-width: 600px) {
+    .levers-grid { grid-template-columns: 1fr; }
+  }
+  .lever-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem 1.3rem;
+  }
+  .lever-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+  .lever-card h4 {
+    font-size: 0.92rem;
+    font-weight: 600;
+    margin: 0 0 0.4rem;
+    color: var(--text);
+  }
+  .lever-card p {
+    font-size: 0.84rem;
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* ─── Inline callout ─── */
+  .callout {
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin: 1.2rem 0;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+  .callout-icon { flex-shrink: 0; font-size: 1rem; margin-top: 1px; }
+  .callout-body { color: var(--muted); }
+  .callout-body strong { color: var(--text); }
+  .callout.blue   { background: var(--tag-bg); border: 1px solid var(--tag-border); }
+  .callout.green  { background: var(--green-bg); border: 1px solid var(--green-border); }
+  .callout.amber  { background: var(--amber-bg); border: 1px solid var(--amber-border); }
+
+  /* ─── Architecture diagram ─── */
+  .arch-diagram {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.4rem 1.6rem;
+    margin: 1.2rem 0;
+  }
+  .arch-diagram h4 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    margin: 0 0 1rem;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .arch-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.65rem;
+    flex-wrap: wrap;
+  }
+  .arch-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    white-space: nowrap;
+  }
+  .arch-box.blue  { border-color: var(--tag-border); color: var(--accent); background: var(--tag-bg); }
+  .arch-box.green { border-color: var(--green-border); color: var(--accent2); background: var(--green-bg); }
+  .arch-box.amber { border-color: var(--amber-border); color: var(--accent3); background: var(--amber-bg); }
+  .arch-arrow {
+    font-size: 0.8rem;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+
+  /* ─── Tech stack table ─── */
+  .stack-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.86rem;
+    margin-top: 0.75rem;
+  }
+  .stack-table thead tr {
+    border-bottom: 1px solid var(--border);
+  }
+  .stack-table th {
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .stack-table td {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .stack-table td:first-child {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .stack-table td:last-child { color: var(--muted); }
+  .stack-table tr:last-child td { border-bottom: none; }
+
+  /* ─── Code block ─── */
+  .code-block {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    line-height: 1.65;
+    color: #A8C7FA;
+    overflow-x: auto;
+    margin: 0.75rem 0;
+  }
+  .code-block .comment { color: var(--muted); }
+  .code-block .keyword { color: var(--accent4); }
+  .code-block .string  { color: var(--accent2); }
+
+  /* ─── Tag chips ─── */
+  .tag-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.6rem; }
+  .tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    letter-spacing: 0.03em;
+  }
+  .tag.blue   { background: var(--tag-bg); color: var(--accent); border: 1px solid var(--tag-border); }
+  .tag.green  { background: var(--green-bg); color: var(--accent2); border: 1px solid var(--green-border); }
+  .tag.amber  { background: var(--amber-bg); color: var(--accent3); border: 1px solid var(--amber-border); }
+  .tag.purple { background: var(--purple-bg); color: var(--accent4); border: 1px solid var(--purple-border); }
+
+  /* ─── Flow steps ─── */
+  .flow-step {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    align-items: flex-start;
+  }
+  .step-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--muted);
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .step-dot.blue   { background: var(--tag-bg); color: var(--accent); border-color: var(--tag-border); }
+  .step-dot.green  { background: var(--green-bg); color: var(--accent2); border-color: var(--green-border); }
+  .step-dot.amber  { background: var(--amber-bg); color: var(--accent3); border-color: var(--amber-border); }
+  .step-dot.purple { background: var(--purple-bg); color: var(--accent4); border-color: var(--purple-border); }
+  .step-content h4 {
+    font-size: 0.92rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem;
+    color: var(--text);
+  }
+  .step-content p {
+    font-size: 0.86rem;
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* ─── Section separator ─── */
+  .sep {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+
+  h2 { font-size: 1.2rem; font-weight: 700; margin: 2rem 0 0.6rem; color: var(--text); }
+  h3 { font-size: 0.95rem; font-weight: 600; margin: 1.5rem 0 0.4rem; color: var(--text); }
+  p  { font-size: 0.9rem; color: var(--muted); margin: 0 0 0.75rem; line-height: 1.65; }
+  p strong { color: var(--text); }
+  ul { margin: 0 0 0.75rem; padding-left: 1.2rem; }
+  ul li { font-size: 0.88rem; color: var(--muted); line-height: 1.65; margin-bottom: 0.35rem; }
+  ul li strong { color: var(--text); }
+
+  /* ─── Footer ─── */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <div class="logo-mark">📦</div>
+      <span>ECommerce_PS Docs</span>
+    </a>
+    <nav class="audience-nav" aria-label="Audience">
+      <button class="nav-btn active" onclick="switchAudience('kid', this)">👶 10-Year-Old</button>
+      <button class="nav-btn" onclick="switchAudience('hs', this)">🎒 High School</button>
+      <button class="nav-btn" onclick="switchAudience('college', this)">🎓 College</button>
+      <button class="nav-btn" onclick="switchAudience('eng', this)">⚙️ Engineer</button>
+      <button class="nav-btn" onclick="switchAudience('pm', this)">📊 PM Pro</button>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Documentation · ECommerce_PS · github.com/avinasharadya88</div>
+    <h1>Catalog Health &amp; Return Profitability Remediation Hub</h1>
+    <p class="hero-sub">A dashboard and decision engine that reads why customers return products, fixes the root cause automatically, and turns that return loss into recovered profit. Pick your level below.</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num blue">18–30%</span><span class="stat-label">fewer returns possible</span></div>
+      <div class="stat"><span class="stat-num green">~58%</span><span class="stat-label">recovery on returned units</span></div>
+      <div class="stat"><span class="stat-num amber">4</span><span class="stat-label">profit levers</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE PILLS -->
+<div class="audience-bar">
+  <div class="audience-bar-inner">
+    <span class="bar-label">Reading as:</span>
+    <button class="pill p-kid active"  onclick="switchAudience('kid', this)">10-Year-Old</button>
+    <button class="pill p-hs"          onclick="switchAudience('hs', this)">High Schooler</button>
+    <button class="pill p-college"     onclick="switchAudience('college', this)">College Grad</button>
+    <button class="pill p-eng"         onclick="switchAudience('eng', this)">Engineer (non-ecomm)</button>
+    <button class="pill p-pm"          onclick="switchAudience('pm', this)">E-Comm PM Pro</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="toc-label">On this page</div>
+    <ul class="toc-list" id="toc">
+      <li><a href="#what-is-it">What is it?</a></li>
+      <li><a href="#the-problem">The problem</a></li>
+      <li><a href="#how-it-helps">How it helps</a></li>
+      <li><a href="#the-4-levers">The 4 levers</a></li>
+      <li><a href="#how-it-works">How it works</a></li>
+      <li><a href="#the-code">The code</a></li>
+    </ul>
+  </aside>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- ────────────────────────────────────────────────
+         AUDIENCE: KID
+    ──────────────────────────────────────────────── -->
+    <div id="sec-kid" class="audience-section visible">
+      <div class="section-header">
+        <div class="section-eyebrow">Level: 10-Year-Old</div>
+        <h2>What is this thing?</h2>
+        <p>No jargon. Promise.</p>
+      </div>
+
+      <div id="what-is-it">
+        <div class="card green-accent">
+          <h3>🛒 Imagine you bought the wrong-sized shoes online</h3>
+          <p>You ordered shoes. The website said size 5. But when they arrived, they were way too small. So you had to send them back. That's called a <strong>return</strong>.</p>
+          <p>Now imagine this happening to <em>millions</em> of people every day. The shoe company has to ship the shoes back, inspect them, and figure out what to do next. That costs a LOT of money.</p>
+        </div>
+
+        <div class="card blue-accent">
+          <h3>🤔 Why did this happen?</h3>
+          <p>The website's description was wrong or confusing. Maybe the size chart was missing. Maybe the photo showed something different from the real product. The <strong>listing</strong> — what the website says about the product — had a mistake in it.</p>
+        </div>
+      </div>
+
+      <div id="the-problem">
+        <h2>The problem this app solves</h2>
+        <div class="card amber-accent">
+          <h3>📢 Nobody was listening to customers</h3>
+          <p>When lots of people returned the same shoes saying "runs too small," that information was sitting in a computer somewhere — but nobody was connecting it to the listing that caused the problem.</p>
+          <p>This app <strong>listens to those complaints automatically</strong>, figures out what the listing got wrong, and suggests a fix. Then it creates a task for the team to go fix it.</p>
+        </div>
+      </div>
+
+      <div id="how-it-helps">
+        <h2>What happens after a fix?</h2>
+        <div class="levers-grid">
+          <div class="lever-card">
+            <div class="lever-num">STEP 1</div>
+            <h4>📝 Fix the description</h4>
+            <p>The size chart gets corrected. Fewer people buy the wrong size. Fewer returns.</p>
+          </div>
+          <div class="lever-card">
+            <div class="lever-num">STEP 2</div>
+            <h4>🔄 Offer an exchange</h4>
+            <p>Instead of giving money back, the store says: "Want to swap for the right size? We'll give you a little bonus!" Many people say yes.</p>
+          </div>
+          <div class="lever-card">
+            <div class="lever-num">STEP 3</div>
+            <h4>🎁 Keep it free</h4>
+            <p>If shipping the item back costs more than the item is worth, the store just says: "Keep it, here's part of your money back." Saves everyone trouble.</p>
+          </div>
+          <div class="lever-card">
+            <div class="lever-num">STEP 4</div>
+            <h4>♻️ Resell it</h4>
+            <p>For items that do come back, the app helps sort them out and sell them again at a discount — instead of throwing them away.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="the-4-levers">
+        <div class="callout green">
+          <div class="callout-icon">💡</div>
+          <div class="callout-body"><strong>The big idea:</strong> Instead of just losing money on every return, this app tries to save some of that money at every step.</div>
+        </div>
+      </div>
+
+      <div id="how-it-works">
+        <h2>How does the computer do it?</h2>
+        <div class="card">
+          <h3>🤖 The app reads customer complaints</h3>
+          <p>When someone returns something, they often write a reason. The app reads thousands of these reasons really fast, spots patterns ("size issue" keeps coming up for these shoes), and figures out exactly what needs to change on the website.</p>
+          <p>Then it automatically makes a little task — like a sticky note — for a real person at the company to review and approve the fix.</p>
+        </div>
+      </div>
+
+      <div id="the-code">
+        <h2>Who built this?</h2>
+        <div class="card">
+          <h3>👨‍💻 It's a real app on the internet</h3>
+          <p>This app was built using a coding language called <strong>React</strong> (for the dashboard you see on screen) and <strong>Python</strong> (for the behind-the-scenes computer work). All the code is saved on a website called <strong>GitHub</strong>, where coders share their work.</p>
+          <div class="tag-row">
+            <span class="tag blue">React</span>
+            <span class="tag green">Python</span>
+            <span class="tag amber">GitHub</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────────────────────────────────────────────────
+         AUDIENCE: HIGH SCHOOL
+    ──────────────────────────────────────────────── -->
+    <div id="sec-hs" class="audience-section">
+      <div class="section-header">
+        <div class="section-eyebrow">Level: High School Student</div>
+        <h2>Returns are bleeding e-commerce companies dry — this is the fix</h2>
+        <p>Think business problem meets AI solution.</p>
+      </div>
+
+      <div id="what-is-it">
+        <div class="card blue-accent">
+          <h3>🏪 The e-commerce returns problem</h3>
+          <p>Online stores like Amazon, Flipkart, and Shopify deal with massive return rates — sometimes 20–30% of all orders. Every return costs money: shipping the item back, inspecting it, restocking it, or just writing it off.</p>
+          <p>The wildest part? Most of those returns happen because the <strong>product listing</strong> — the title, description, photos, and size charts on the website — gave customers the wrong information.</p>
+        </div>
+      </div>
+
+      <div id="the-problem">
+        <h2>Why doesn't anyone just fix the listing?</h2>
+        <div class="card amber-accent">
+          <h3>📂 The data is trapped in the wrong place</h3>
+          <p>Customer return reasons, reviews, and complaints live in one software system. The product catalog — what's actually shown on the website — lives in another. Nobody was automatically connecting these two.</p>
+          <p>Category managers (the people responsible for a product group) spent hours manually reading through spreadsheets trying to spot patterns. Meanwhile, the bad listing kept causing more returns.</p>
+        </div>
+      </div>
+
+      <div id="how-it-helps">
+        <h2>What this app does about it</h2>
+        <div class="flow-step">
+          <div class="step-dot blue">1</div>
+          <div class="step-content">
+            <h4>Listens to return signals in real time</h4>
+            <p>When a customer returns an item, the system automatically receives a notification (called a <strong>webhook</strong>) with the return reason.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-dot amber">2</div>
+          <div class="step-content">
+            <h4>AI figures out what went wrong</h4>
+            <p>Using an AI technique called <strong>zero-shot classification</strong>, the app reads the return reason and buckets it: "sizing issue," "misleading photo," "wrong material description," etc. — without needing to be trained on thousands of examples first.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-dot green">3</div>
+          <div class="step-content">
+            <h4>Drafts the fix and assigns a task</h4>
+            <p>The app generates an exact suggestion for what to change in the listing, then creates a work ticket in tools like <strong>Jira or Linear</strong> — the task management software engineering teams use.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-dot purple">4</div>
+          <div class="step-content">
+            <h4>Shows the financial impact</h4>
+            <p>The dashboard has an interactive calculator where you can slide around assumptions — "what if we prevent 25% of returns?" — and see the real dollar impact on the business.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="the-4-levers">
+        <h2>The 4 profit levers</h2>
+        <div class="levers-grid">
+          <div class="lever-card">
+            <div class="lever-num">LEVER 1</div>
+            <h4>Fix the listing, prevent the return</h4>
+            <p>Better size charts, accurate material specs, correct photos. Prevents 18–30% of returns before they happen.</p>
+          </div>
+          <div class="lever-card">
+            <div class="lever-num">LEVER 2</div>
+            <h4>Swap refund for exchange</h4>
+            <p>Offer the customer a +10% store credit bonus to exchange instead of refund. Store keeps the money in the system.</p>
+          </div>
+          <div class="lever-card">
+            <div class="lever-num">LEVER 3</div>
+            <h4>"Keep it" micro-refund</h4>
+            <p>If returning a $15 item costs $12 in shipping, just give the customer a partial refund and let them keep it. Net saving: ~$11.</p>
+          </div>
+          <div class="lever-card">
+            <div class="lever-num">LEVER 4</div>
+            <h4>Grade and resell returned units</h4>
+            <p>Automatically sort returned items and sell them as "certified open box" at 58% recovery instead of bulk liquidation at 15%.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="how-it-works">
+        <h2>How it's built</h2>
+        <div class="card">
+          <h3>Tech involved</h3>
+          <p>The front end — what you see and interact with — is built in <strong>React</strong> with <strong>TypeScript</strong> and styled with <strong>Tailwind CSS</strong>. The back end is a lightweight <strong>Python FastAPI</strong> server. Charts are rendered using a library called <strong>Recharts</strong>.</p>
+          <div class="tag-row">
+            <span class="tag blue">React + TypeScript</span>
+            <span class="tag green">Python FastAPI</span>
+            <span class="tag amber">Tailwind CSS</span>
+            <span class="tag purple">Recharts</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="the-code">
+        <div class="callout amber">
+          <div class="callout-icon">🚀</div>
+          <div class="callout-body"><strong>Interesting angle for you:</strong> This entire prototype was built in under 48 hours using AI coding tools (Claude Code) alongside the app itself. A product manager, not a full engineering team, built it.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────────────────────────────────────────────────
+         AUDIENCE: COLLEGE
+    ──────────────────────────────────────────────── -->
+    <div id="sec-college" class="audience-section">
+      <div class="section-header">
+        <div class="section-eyebrow">Level: College Graduate</div>
+        <h2>Closing the loop between customer friction signals and catalog quality</h2>
+        <p>A practical AI-powered system for a real, expensive business problem.</p>
+      </div>
+
+      <div id="what-is-it">
+        <div class="card blue-accent">
+          <h3>The disconnect that costs billions</h3>
+          <p>E-commerce return rates typically run 20–30%, with fashion hitting 40%+. The bulk of these are <em>preventable</em>: customers buying a product that the listing misrepresented — a size chart that hasn't been updated, a fabric description that doesn't match reality, photos that show a different color under studio lighting.</p>
+          <p>The problem isn't that companies don't have the data. They have mountains of it: return reason codes, 1–3 star reviews, customer service transcripts, Q&A threads. The problem is that this data lives in customer support tools (Zendesk, Intercom) and reverse-logistics systems, completely disconnected from the catalog management workflow.</p>
+        </div>
+      </div>
+
+      <div id="the-problem">
+        <h2>The bottleneck: manual signal processing</h2>
+        <div class="card amber-accent">
+          <h3>Category managers as the chokepoint</h3>
+          <p>In most organizations, a category manager manually reads through support exports, tries to spot patterns, writes up findings, creates tickets, and then follows up with copywriters. At scale, this fails. The lag between a return signal appearing and a listing getting fixed can be weeks or months — during which the same bad listing keeps generating more returns.</p>
+          <p>This system replaces that manual loop with an automated pipeline: return webhook → AI classification → listing fix draft → ticket auto-created in Linear or Jira.</p>
+        </div>
+      </div>
+
+      <div id="how-it-helps">
+        <h2>System overview</h2>
+        <div class="arch-diagram">
+          <h4>Data pipeline</h4>
+          <div class="arch-row">
+            <div class="arch-box blue">Return webhook</div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-box">HMAC-SHA256 verify</div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-box">HTTP 200 (async)</div>
+          </div>
+          <div class="arch-row">
+            <div class="arch-box blue">LLM zero-shot classify</div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-box green">Root cause + fix draft</div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-box amber">Linear / Jira ticket</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="the-4-levers">
+        <h2>The financial model: 4 levers from loss to profit</h2>
+        <p>Traditional returns accounting treats them as a straight write-off: outbound shipping + reverse logistics + inspection labor + inventory depreciation. The system models four intervention points instead.</p>
+        <div class="levers-grid">
+          <div class="lever-card">
+            <div class="lever-num">LEVER 1 · PREVENTION</div>
+            <h4>Catalog fixes reduce return volume</h4>
+            <p>Zero-shot extraction of sizing, material, and assembly gaps auto-patches the listing. Target: 18–30% reduction in preventable returns.</p>
+          </div>
+          <div class="lever-card">
+            <div class="lever-num">LEVER 2 · RETENTION</div>
+            <h4>Exchange-over-refund incentives</h4>
+            <p>A +10% bonus store credit offer converts refund requests into exchanges. Gross margin is retained. Customer LTV is preserved rather than paid out as cash.</p>
+          </div>
+          <div class="lever-card">
+            <div class="lever-num">LEVER 3 · ARBITRAGE</div>
+            <h4>Keep-it micro-refund</h4>
+            <p>Where shipping ($7.50) + handling ($4.50) exceeds a low-value item's salvage, a 60% partial refund eliminates $11+ in net logistics cost.</p>
+          </div>
+          <div class="lever-card">
+            <div class="lever-num">LEVER 4 · RECOVERY</div>
+            <h4>Automated grading + recommerce</h4>
+            <p>Returned inventory routed to certified open-box channels at ~58% salvage vs. the ~15% bulk liquidation rate.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="how-it-works">
+        <h2>The AI classification system</h2>
+        <div class="card">
+          <h3>Zero-shot classification for root cause tagging</h3>
+          <p>Return text is fed to an LLM with a structured prompt that asks it to classify into one of five root causes without any fine-tuning on labeled examples:</p>
+          <ul>
+            <li><strong>Sizing / Fit Discrepancy</strong> — P1 priority</li>
+            <li><strong>Material Quality Drift</strong> — P2</li>
+            <li><strong>Misleading Listing Image</strong> — P2</li>
+            <li><strong>Missing Assembly / Dimension Spec</strong> — P3</li>
+            <li><strong>Pricing &amp; Promotion Drift</strong> — P3</li>
+          </ul>
+          <p>The model also outputs a confidence score and the specific listing field that needs updating, along with a copy-pasteable suggested fix.</p>
+        </div>
+      </div>
+
+      <div id="the-code">
+        <h2>Stack and structure</h2>
+        <table class="stack-table">
+          <thead><tr><th>Layer</th><th>Technology</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td>Frontend</td><td>React + TypeScript + Vite</td><td>Interactive dashboard, profitability modeler, listing diff editor</td></tr>
+            <tr><td>Styling</td><td>Tailwind CSS</td><td>Utility-first CSS, responsive layout</td></tr>
+            <tr><td>Charts</td><td>Recharts</td><td>Waterfall P&amp;L chart, SKU spike monitor</td></tr>
+            <tr><td>Backend</td><td>Python FastAPI</td><td>Webhook ingestion, HMAC verification, ticket dispatch</td></tr>
+            <tr><td>Issue tracking</td><td>Linear GraphQL + Jira REST v3</td><td>Auto-create backlog tickets with structured ADF format</td></tr>
+            <tr><td>Testing</td><td>Vitest + dedicated QA agent</td><td>Financial formula checks, classification precision, API payload schema</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ────────────────────────────────────────────────
+         AUDIENCE: ENGINEER
+    ──────────────────────────────────────────────── -->
+    <div id="sec-eng" class="audience-section">
+      <div class="section-header">
+        <div class="section-eyebrow">Level: Engineer (not in e-commerce)</div>
+        <h2>An autonomous webhook-to-ticket pipeline with an LLM classification layer</h2>
+        <p>Solid system design. Here's how it's wired together.</p>
+      </div>
+
+      <div id="what-is-it">
+        <div class="card blue-accent">
+          <h3>Domain context first</h3>
+          <p>E-commerce platforms deal with <strong>product return rates of 20–40%</strong>. Most of these returns are triggered by listing quality issues — wrong size charts, inaccurate material descriptions, misleading photos. The data proving this exists in return reason codes, reviews, and support transcripts, but nobody was programmatically connecting it to catalog updates.</p>
+          <p>This system is a full-stack prototype that closes that loop: ingest return signals, classify root cause via LLM, generate remediation copy, and dispatch a structured issue to Linear or Jira.</p>
+        </div>
+      </div>
+
+      <div id="the-problem">
+        <h2>Architecture</h2>
+        <div class="arch-diagram">
+          <h4>Three-tier pipeline</h4>
+          <div class="arch-row">
+            <div class="arch-box blue">Ingestion tier</div>
+          </div>
+          <div class="arch-row" style="padding-left:1rem">
+            <div class="arch-box">HTTP POST webhook</div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-box">HMAC-SHA256 (timing-safe)</div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-box green">HTTP 200 &lt;5s</div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-box">async pipeline</div>
+          </div>
+          <div class="arch-row" style="margin-top:0.75rem">
+            <div class="arch-box blue">Processing tier</div>
+          </div>
+          <div class="arch-row" style="padding-left:1rem">
+            <div class="arch-box">LLM zero-shot classify</div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-box amber">root cause + priority</div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-box">copy fix draft</div>
+          </div>
+          <div class="arch-row" style="margin-top:0.75rem">
+            <div class="arch-box blue">Execution tier</div>
+          </div>
+          <div class="arch-row" style="padding-left:1rem">
+            <div class="arch-box">Linear GraphQL issueCreate</div>
+            <div class="arch-arrow">or</div>
+            <div class="arch-box">Jira REST v3 (ADF body)</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="how-it-helps">
+        <h2>Webhook ingestion details</h2>
+        <div class="card">
+          <h3>FastAPI backend (<code>backend_server.py</code>)</h3>
+          <p>POST endpoint accepts return payloads from upstream systems (Zendesk webhooks, marketplace APIs). HMAC-SHA256 validation uses <code>hmac.compare_digest</code> for timing-safe comparison to block replay attacks. The endpoint returns <code>200 OK</code> immediately and kicks off the classification pipeline asynchronously to meet the &lt;5s SLA.</p>
+          <p>The repo also ships a <strong>simulate webhook trigger</strong> in the UI — a built-in generator that injects realistic return payloads with mock HMAC signatures for development and demo purposes.</p>
+        </div>
+
+        <div class="card">
+          <h3>LLM classification prompt design</h3>
+          <p>Zero-shot classification with structured output. The prompt passes customer return text and asks the model to output one of five categories, a confidence score, the affected listing field, and a copy fix suggestion. No fine-tuning required — works on raw unstructured text from any source.</p>
+          <div class="code-block"><span class="comment">// Classification schema (simplified)</span>
+{
+  <span class="keyword">category</span>: <span class="string">"SIZING_FIT" | "MATERIAL_QUALITY" | "MISLEADING_IMAGE" | "ASSEMBLY_SPEC" | "PRICING_DRIFT"</span>,
+  <span class="keyword">priority</span>: <span class="string">"P1" | "P2" | "P3"</span>,
+  <span class="keyword">listing_field</span>: <span class="string">"size_chart" | "material_description" | "images" | "dimensions" | "pricing"</span>,
+  <span class="keyword">confidence</span>: 0.0 – 1.0,
+  <span class="keyword">proposed_copy_fix</span>: <span class="string">"..."</span>
+}</div>
+        </div>
+      </div>
+
+      <div id="the-4-levers">
+        <h2>Issue dispatch: Linear and Jira</h2>
+        <div class="card">
+          <h3>Linear GraphQL</h3>
+          <p>Endpoint: <code>POST https://api.linear.app/graphql</code>. Auth: <code>Authorization: lin_api_...</code> — no Bearer prefix. Mutation: <code>issueCreate</code> with a structured Markdown body containing SKU, category, customer quote, proposed fix, and priority.</p>
+        </div>
+        <div class="card">
+          <h3>Jira Cloud REST v3</h3>
+          <p>Endpoint: <code>POST /rest/api/3/issue</code>. Body formatted using Atlassian Document Format (ADF) — a nested JSON schema Jira requires for rich-text fields. Not plain text.</p>
+        </div>
+      </div>
+
+      <div id="how-it-works">
+        <h2>Frontend architecture</h2>
+        <div class="card">
+          <h3>React + TypeScript + Vite</h3>
+          <p>The UI has several distinct modules:</p>
+          <ul>
+            <li><strong>Interactive profitability modeler</strong> — live sliders for prevention rate, exchange conversion, keep-it threshold, recommerce salvage. Recharts waterfall showing P&L transformation.</li>
+            <li><strong>Multi-marketplace filter</strong> — Amazon US, Flipkart, Shopify Global; reconciled 7-day / 30-day / QTD signal volumes.</li>
+            <li><strong>SKU alert monitor</strong> — detects abnormal return spikes (e.g. +180% return surge on a SKU) and surfaces the classified root cause.</li>
+            <li><strong>Remediation inspector</strong> — side-by-side diff of current listing copy vs. AI-proposed fix, with inline editing.</li>
+            <li><strong>One-click ticket dispatch</strong> — submits to Linear or Jira from the dashboard with a single click.</li>
+          </ul>
+          <p>Standalone build available: double-click <code>index.html</code>, loads from <code>standalone/</code> directory without a dev server.</p>
+        </div>
+      </div>
+
+      <div id="the-code">
+        <h2>Testing setup</h2>
+        <div class="card">
+          <h3>Decoupled QA agent architecture</h3>
+          <p>Testing is intentionally decoupled from the main development agent. A dedicated <code>qa_test_agent</code> subagent handles: financial formula verification, edge case coverage, zero-shot classification precision testing, and API payload schema validation. Vitest is the test runner.</p>
+          <p>Run with <code>npm run test</code>. The QA agent operates independently to avoid context pollution in the main development workflow.</p>
+        </div>
+        <div class="card">
+          <h3>Quick start</h3>
+          <div class="code-block"><span class="comment"># Frontend</span>
+npm install
+npm run dev        <span class="comment"># → http://localhost:3000</span>
+npm run test       <span class="comment"># Vitest</span>
+npm run build      <span class="comment"># also refreshes standalone/</span>
+
+<span class="comment"># Optional FastAPI backend</span>
+pip install fastapi uvicorn requests pydantic
+<span class="keyword">export</span> LINEAR_API_KEY=<span class="string">"lin_api_your_key_here"</span>
+<span class="keyword">export</span> LINEAR_TEAM_ID=<span class="string">"your_linear_team_id"</span>
+uvicorn backend_server:app --port 8000 --reload</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────────────────────────────────────────────────
+         AUDIENCE: PM PRO
+    ──────────────────────────────────────────────── -->
+    <div id="sec-pm" class="audience-section">
+      <div class="section-header">
+        <div class="section-eyebrow">Level: E-Commerce PM Pro</div>
+        <h2>Converting unstructured return signals into retained margin — the full picture</h2>
+        <p>Research grounded in NotebookLM analysis across Amazon, Flipkart, and Shopify ecosystems.</p>
+      </div>
+
+      <div id="what-is-it">
+        <div class="card red-accent">
+          <h3>The core failure mode you already know</h3>
+          <p>The <strong>signal-to-fix lag</strong>. Return reason data, 1–3 star reviews, and CS transcripts contain the exact root cause of listing quality drift — but the path from that signal to a corrected listing runs through manual spreadsheet review, informal Slack pings to catalog teams, and weeks-long ticket cycles. By the time the fix lands, the SKU has generated another 500 preventable returns.</p>
+          <p>This system eliminates that lag entirely via an automated ingestion-to-ticket pipeline with LLM zero-shot classification as the translation layer.</p>
+        </div>
+      </div>
+
+      <div id="the-problem">
+        <h2>The 4-lever financial model</h2>
+        <p>The interactive dashboard models return economics across four intervention points. All assumptions are editable via sliders — this is not a static presentation, it's a working P&amp;L calculator.</p>
+        <div class="levers-grid">
+          <div class="lever-card">
+            <div class="lever-num">LEVER 1 · PREVENTION</div>
+            <h4>Catalog quality fixes</h4>
+            <p>Zero-shot extraction auto-patches sizing guides, fabric GSM data, and hardware assembly specs. Target: 18–30% reduction in preventable return volume. Direct gross margin protection.</p>
+          </div>
+          <div class="lever-card">
+            <div class="lever-num">LEVER 2 · RETENTION</div>
+            <h4>Exchange-over-refund conversion</h4>
+            <p>+10% bonus store credit offer at return initiation. Converts cash refunds into exchanges. Protects gross margin and — critically — retains repeat LTV customers who would otherwise churn on a bad experience.</p>
+          </div>
+          <div class="lever-card">
+            <div class="lever-num">LEVER 3 · ARBITRAGE</div>
+            <h4>Keep-it / micro-refund threshold</h4>
+            <p>For SKUs where reverse logistics cost ($12+) exceeds salvage value, automated micro-refund eliminates return shipping and warehouse inspection entirely. Net saving: ~$11 per triggered case.</p>
+          </div>
+          <div class="lever-card">
+            <div class="lever-num">LEVER 4 · RECOVERY</div>
+            <h4>Graded recommerce routing</h4>
+            <p>Automated grading routes returned units to certified open-box channels at ~58% salvage recovery vs. bulk liquidation at ~15%. The gap between these two numbers is the opportunity.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="how-it-helps">
+        <h2>Marketplace pain points addressed</h2>
+        <table class="stack-table">
+          <thead><tr><th>Pain Point</th><th>Root Cause</th><th>System Response</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Return rate spikes</td>
+              <td>Listing copy / photo / spec misalignment</td>
+              <td>Automated return cause + catalog fix engine. Real-time webhook ingestion, zero-shot classification, Linear/Jira dispatch.</td>
+            </tr>
+            <tr>
+              <td>Seller support volume</td>
+              <td>Repetitive policy/payout/listing questions</td>
+              <td>RAG/MCP policy assistant grounded on internal docs — zero hallucination, seller-facing. (Research documented; implementation extension.)</td>
+            </tr>
+            <tr>
+              <td>Competitor listing drift</td>
+              <td>No visibility on competitor catalog changes</td>
+              <td>Multimodal listing QA auditor — vision model diffs + Slack alerts. (Architecture specified in research.md.)</td>
+            </tr>
+            <tr>
+              <td>Fragmented feedback</td>
+              <td>Reviews, NPS, transcripts across disconnected SaaS</td>
+              <td>Zero-shot feedback aggregator maps complaint clusters to product backlogs.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="the-4-levers">
+        <h2>The AI classification system in detail</h2>
+        <div class="card">
+          <h3>Zero-shot root cause taxonomy</h3>
+          <p>Five categories, prioritized by return-rate impact and fix complexity:</p>
+          <ul>
+            <li><strong>P1 — Sizing / Fit Discrepancy:</strong> Highest volume, most directly addressable via size chart updates. Immediate listing change, measurable return rate impact within 14–21 days.</li>
+            <li><strong>P2 — Material Quality Drift:</strong> Fabric GSM changes from supplier without listing updates. Requires supplier coordination + listing copy fix.</li>
+            <li><strong>P2 — Misleading Listing Image:</strong> Studio lighting color shifts, angle misrepresentation. Requires photography workflow fix upstream.</li>
+            <li><strong>P3 — Missing Assembly / Dimension Spec:</strong> Most common in furniture, electronics accessories, flat-pack. One-time fix with high durability.</li>
+            <li><strong>P3 — Pricing &amp; Promotion Drift:</strong> Expectation mismatch from expired promotions still indexed in search results.</li>
+          </ul>
+          <p>Each classification includes a confidence score and a specific listing field reference — not just a category label. The proposed fix is copy-pasteable into the listing editor directly.</p>
+        </div>
+      </div>
+
+      <div id="how-it-works">
+        <h2>PM-independent build capability</h2>
+        <div class="card">
+          <h3>The independent PM AI stack</h3>
+          <p>This prototype demonstrates what a single PM can ship without a dedicated engineering team:</p>
+          <table class="stack-table">
+            <thead><tr><th>Tool</th><th>Role</th></tr></thead>
+            <tbody>
+              <tr><td>Claude Code</td><td>Agentic coding — file manipulation, scaffolding, test automation</td></tr>
+              <tr><td>NotebookLM</td><td>Grounded research synthesis from customer transcripts and policy docs. Zero hallucination on structured sources.</td></tr>
+              <tr><td>v0 / React</td><td>Rapid UI generation for dashboards, financial modelers, inspector drawers</td></tr>
+              <tr><td>Linear / Jira APIs</td><td>Direct ops integration — insights → trackable engineering backlog items</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout blue">
+          <div class="callout-icon">⏱</div>
+          <div class="callout-body"><strong>48-hour build plan documented in research.md:</strong> Hour 0–12 (webhook ingestion) → Hour 12–24 (AI classification pipeline) → Hour 24–36 (Linear/Jira integration) → Hour 36–48 (React dashboard + financial modeler).</div>
+        </div>
+      </div>
+
+      <div id="the-code">
+        <h2>Dashboard feature inventory</h2>
+        <div class="card">
+          <ul>
+            <li><strong>Interactive P&amp;L modeler</strong> — editable sliders for annual return volume, AOV, reverse shipping cost, inspection/restocking cost, gross margin, exchange bonus %, keep-it threshold, recommerce salvage rate. Recharts waterfall from traditional loss to retained turnaround value.</li>
+            <li><strong>Multi-marketplace support</strong> — Amazon US, Flipkart, Shopify Global. 7-day, 30-day, QTD signal reconciliation.</li>
+            <li><strong>SKU alert monitor</strong> — abnormal return spike detection with root cause surface. Example: SKU APP-XL-BLU-2026 at +180% return surge.</li>
+            <li><strong>Remediation inspector + live diff editor</strong> — customer quote, current listing copy, AI proposed update, inline editing before dispatch.</li>
+            <li><strong>One-click dispatch</strong> — Linear GraphQL (<code>issueCreate</code>) or Jira Cloud REST v3 (ADF format). Formatted backlog ticket generated automatically.</li>
+            <li><strong>Webhook simulator</strong> — built-in realistic return payload generator with HMAC-SHA256 simulation for testing without live marketplace connections.</li>
+          </ul>
+        </div>
+
+        <div class="callout green">
+          <div class="callout-icon">📎</div>
+          <div class="callout-body"><strong>Source:</strong> All research, architecture, and financial models are documented in <code>research.md</code> in the repo. Grounded in NotebookLM analysis. No hallucinated benchmarks — figures are sourced from the research document.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<footer>
+  <p>ECommerce_PS · <a href="https://github.com/avinasharadya88/ECommerce_PS" target="_blank">github.com/avinasharadya88/ECommerce_PS</a> · Catalog Health &amp; Return Profitability Remediation Hub</p>
+</footer>
+
+<script>
+  const AUDIENCES = ['kid', 'hs', 'college', 'eng', 'pm'];
+
+  function switchAudience(id, clickedBtn) {
+    // Hide all sections
+    AUDIENCES.forEach(a => {
+      const sec = document.getElementById('sec-' + a);
+      if (sec) sec.classList.remove('visible');
+    });
+
+    // Show the target
+    const target = document.getElementById('sec-' + id);
+    if (target) target.classList.add('visible');
+
+    // Update all nav buttons and pills
+    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.pill').forEach(pill => pill.classList.remove('active'));
+
+    // Activate the matching header nav button
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes("'" + id + "'")) {
+        btn.classList.add('active');
+      }
+    });
+
+    // Activate the matching pill
+    const audienceMap = { kid: 'p-kid', hs: 'p-hs', college: 'p-college', eng: 'p-eng', pm: 'p-pm' };
+    document.querySelectorAll('.' + audienceMap[id]).forEach(el => el.classList.add('active'));
+  }
+</script>
+</body>
+</html>
