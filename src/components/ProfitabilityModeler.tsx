@@ -14,6 +14,23 @@ export const ProfitabilityModeler: React.FC<ProfitabilityModelerProps> = ({
   onParamsChange,
   breakdown,
 }) => {
+  const updateAssumption = (key: keyof ProfitabilityParams, value: string) => {
+    const numericValue = Number(value);
+    if (Number.isFinite(numericValue) && numericValue >= 0) {
+      onParamsChange({ ...params, [key]: numericValue });
+    }
+  };
+
+  const assumptions: { key: keyof ProfitabilityParams; label: string; prefix?: string; suffix?: string; step?: number }[] = [
+    { key: 'annualReturnsCount', label: 'Annual return units', step: 1000 },
+    { key: 'avgItemPrice', label: 'Average item value', prefix: '$', step: 1 },
+    { key: 'reverseLogisticsShippingCost', label: 'Reverse shipping / unit', prefix: '$', step: 0.5 },
+    { key: 'inspectionAndRestockingCost', label: 'Inspection & restock / unit', prefix: '$', step: 0.5 },
+    { key: 'grossProfitMargin', label: 'Gross margin', suffix: '%', step: 1 },
+    { key: 'exchangeBonusCreditRate', label: 'Exchange bonus credit', suffix: '%', step: 1 },
+    { key: 'keepItRefundPercentage', label: 'Keep-it partial refund', suffix: '%', step: 1 },
+  ];
+
   const chartData = [
     {
       name: 'Baseline Loss',
@@ -78,6 +95,42 @@ export const ProfitabilityModeler: React.FC<ProfitabilityModelerProps> = ({
           <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded font-semibold">
             {breakdown.netTurnaroundPercentage}% Recovered
           </span>
+        </div>
+      </div>
+
+      <div className="mt-5 rounded-lg border border-slate-800 bg-slate-950/55 p-4">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-1 mb-3">
+          <div>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+              Base P&amp;L assumptions
+            </h3>
+            <p className="text-[11px] text-slate-500 mt-0.5">
+              Replace the sample values with your operating economics; every outcome below recalculates instantly.
+            </p>
+          </div>
+          <span className="text-[10px] text-slate-500">USD · annualized</span>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-2.5">
+          {assumptions.map(({ key, label, prefix, suffix, step }) => (
+            <label key={key} className="block">
+              <span className="block text-[10px] text-slate-500 mb-1 truncate" title={label}>
+                {label}
+              </span>
+              <span className="flex items-center rounded-md border border-slate-800 bg-slate-950 focus-within:border-indigo-500">
+                {prefix && <span className="pl-2 text-xs text-slate-500">{prefix}</span>}
+                <input
+                  aria-label={label}
+                  type="number"
+                  min="0"
+                  step={step}
+                  value={params[key]}
+                  onChange={(event) => updateAssumption(key, event.target.value)}
+                  className="w-full min-w-0 bg-transparent px-2 py-1.5 text-xs font-mono text-slate-200 outline-none"
+                />
+                {suffix && <span className="pr-2 text-xs text-slate-500">{suffix}</span>}
+              </span>
+            </label>
+          ))}
         </div>
       </div>
 

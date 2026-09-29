@@ -71,13 +71,34 @@ describe('E-Commerce Returns-to-Profit Financial Engine', () => {
   it('correctly models keep-it threshold savings', () => {
     const result = calculateProfitability(DEFAULT_PROFITABILITY_PARAMS);
 
-    // Unit handling cost is shipping ($7.50) + restocking ($4.50) = $12
+    // Keep-it value includes avoided handling and retained revenue, net of
+    // liquidation recovery that would have occurred on a physical return.
     const unitHandlingCost =
       DEFAULT_PROFITABILITY_PARAMS.reverseLogisticsShippingCost +
       DEFAULT_PROFITABILITY_PARAMS.inspectionAndRestockingCost;
+    const valuePerKeepIt =
+      unitHandlingCost +
+      DEFAULT_PROFITABILITY_PARAMS.avgItemPrice *
+        (1 - DEFAULT_PROFITABILITY_PARAMS.keepItRefundPercentage / 100) -
+      DEFAULT_PROFITABILITY_PARAMS.avgItemPrice * 0.15;
 
     expect(result.keepItLogisticsSaved).toBe(
-      Math.round(result.keepItUnits * unitHandlingCost)
+      Math.round(result.keepItUnits * valuePerKeepIt)
+    );
+  });
+
+  it('uses the partial-refund assumption in keep-it economics', () => {
+    const generousRefund = calculateProfitability({
+      ...DEFAULT_PROFITABILITY_PARAMS,
+      keepItRefundPercentage: 80,
+    });
+    const conservativeRefund = calculateProfitability({
+      ...DEFAULT_PROFITABILITY_PARAMS,
+      keepItRefundPercentage: 40,
+    });
+
+    expect(conservativeRefund.keepItLogisticsSaved).toBeGreaterThan(
+      generousRefund.keepItLogisticsSaved
     );
   });
 });

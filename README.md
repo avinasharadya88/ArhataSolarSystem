@@ -48,10 +48,11 @@ Instead of accepting returns as a pure balance sheet write-off, the engine imple
 ## 🚀 Key Dashboard Features
 
 1. **Interactive Profitability Modeler**:
+   - Editable P&L assumptions for annual return volume, average order value, reverse shipping, inspection/restocking, gross margin, exchange bonus, and keep-it refund rate.
    - Live interactive sliders for Prevention Rate (%), Exchange Incentive Conversion (%), Keep-it Threshold (\$), and Recommerce Salvage Rate (%).
    - Recharts waterfall visualization showing the transition from traditional balance-sheet loss to positive retained turnaround value.
 2. **Multi-Marketplace Support**:
-   - Filter and analyze feeds across **Amazon US**, **Flipkart**, and **Shopify Global**.
+   - Filter and analyze feeds across **Amazon US**, **Flipkart**, and **Shopify Global**, with reconciled 7-day, 30-day, and quarter-to-date signal volumes.
 3. **AI Zero-Shot Signal Categorization**:
    - Clusters customer feedback into: *Sizing / Fit Discrepancy*, *Material Quality Drift*, *Misleading Listing Image*, *Missing Assembly Spec*, and *Pricing Drift*.
 4. **High-Spike SKU Alert Monitor**:

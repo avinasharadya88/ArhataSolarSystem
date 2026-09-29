@@ -66,6 +66,59 @@ const INITIAL_SPIKE_ALERTS: HighSpikeSku[] = [
   },
 ];
 
+const BASE_SIGNAL_COUNTS: Record<Exclude<Marketplace, 'all'>, Record<ReturnCategory, number>> = {
+  amazon: {
+    'Sizing / Fit Discrepancy': 268,
+    'Material Quality Drift': 132,
+    'Misleading Listing Image': 121,
+    'Missing Assembly Spec': 54,
+    'Pricing & Promotion Drift': 45,
+  },
+  flipkart: {
+    'Sizing / Fit Discrepancy': 183,
+    'Material Quality Drift': 137,
+    'Misleading Listing Image': 73,
+    'Missing Assembly Spec': 42,
+    'Pricing & Promotion Drift': 25,
+  },
+  shopify: {
+    'Sizing / Fit Discrepancy': 105,
+    'Material Quality Drift': 85,
+    'Misleading Listing Image': 47,
+    'Missing Assembly Spec': 74,
+    'Pricing & Promotion Drift': 29,
+  },
+};
+
+const TIMEFRAME_MULTIPLIER: Record<Timeframe, number> = {
+  '7d': 1,
+  '30d': 4.1,
+  '90d': 12.7,
+};
+
+const CATEGORY_META: Record<ReturnCategory, { color: string; description: string }> = {
+  'Sizing / Fit Discrepancy': {
+    color: '#6366f1',
+    description: 'Runs small/large, tight shoulders, incorrect dimensional charts.',
+  },
+  'Material Quality Drift': {
+    color: '#8b5cf6',
+    description: 'Fabric opacity/GSM deviation, loose threading, texture complaints.',
+  },
+  'Misleading Listing Image': {
+    color: '#06b6d4',
+    description: 'Color mismatch under real lighting, photo accessories not included.',
+  },
+  'Missing Assembly Spec': {
+    color: '#f59e0b',
+    description: 'Missing dimensions, bolt checklist omission, unclear manuals.',
+  },
+  'Pricing & Promotion Drift': {
+    color: '#f43f5e',
+    description: 'Bundle, discount, or promotion terms differ from buyer expectations.',
+  },
+};
+
 export default function App() {
   const [logs, setLogs] = useState<ReturnLog[]>(SAMPLE_RETURN_LOGS);
   const [marketplace, setMarketplace] = useState<Marketplace>('all');
@@ -97,7 +150,8 @@ export default function App() {
     return calculateProfitability(params);
   }, [params]);
 
-  // Root cause distribution
+  // Root-cause distribution uses a stable 7-day baseline and layers in simulated
+  // webhook events, so marketplace and timeframe filters always reconcile to 100%.
   const rootCauseDistribution = useMemo(() => {
     const counts: Record<ReturnCategory, number> = {
       'Sizing / Fit Discrepancy': 0,
@@ -107,43 +161,37 @@ export default function App() {
       'Pricing & Promotion Drift': 0,
     };
 
-    filteredLogs.forEach((l) => {
-      counts[l.category] = (counts[l.category] || 0) + 1;
+    const selectedMarketplaces: Exclude<Marketplace, 'all'>[] =
+      marketplace === 'all' ? ['amazon', 'flipkart', 'shopify'] : [marketplace];
+    selectedMarketplaces.forEach((channel) => {
+      (Object.keys(counts) as ReturnCategory[]).forEach((category) => {
+        counts[category] += BASE_SIGNAL_COUNTS[channel][category];
+      });
     });
 
-    const total = filteredLogs.length || 1;
+    const scale = TIMEFRAME_MULTIPLIER[timeframe];
+    (Object.keys(counts) as ReturnCategory[]).forEach((category) => {
+      counts[category] = Math.round(counts[category] * scale);
+    });
 
-    return [
-      {
-        category: 'Sizing / Fit Discrepancy' as ReturnCategory,
-        percentage: Math.round(((counts['Sizing / Fit Discrepancy'] || 0) / total) * 100) || 42,
-        count: (counts['Sizing / Fit Discrepancy'] || 0) + 596,
-        color: '#6366f1',
-        description: 'Runs small/large, tight shoulders, incorrect dimensional charts.',
-      },
-      {
-        category: 'Material Quality Drift' as ReturnCategory,
-        percentage: Math.round(((counts['Material Quality Drift'] || 0) / total) * 100) || 28,
-        count: (counts['Material Quality Drift'] || 0) + 397,
-        color: '#8b5cf6',
-        description: 'Fabric opacity/GSM deviation, loose threading, texture complaints.',
-      },
-      {
-        category: 'Misleading Listing Image' as ReturnCategory,
-        percentage: Math.round(((counts['Misleading Listing Image'] || 0) / total) * 100) || 18,
-        count: (counts['Misleading Listing Image'] || 0) + 255,
-        color: '#06b6d4',
-        description: 'Color mismatch under real lighting, photo accessories not included.',
-      },
-      {
-        category: 'Missing Assembly Spec' as ReturnCategory,
-        percentage: Math.round(((counts['Missing Assembly Spec'] || 0) / total) * 100) || 12,
-        count: (counts['Missing Assembly Spec'] || 0) + 172,
-        color: '#f59e0b',
-        description: 'Missing dimensions, bolt checklist omission, unclear manuals.',
-      },
-    ];
-  }, [filteredLogs]);
+    logs.slice(0, Math.max(0, logs.length - SAMPLE_RETURN_LOGS.length)).forEach((log) => {
+      if (marketplace === 'all' || log.marketplace === marketplace) counts[log.category] += 1;
+    });
+
+    const total = Object.values(counts).reduce((sum, count) => sum + count, 0);
+    const categories = Object.keys(counts) as ReturnCategory[];
+    let assignedPercentage = 0;
+
+    return categories.map((category, index) => {
+      const percentage = index === categories.length - 1
+        ? 100 - assignedPercentage
+        : Math.round((counts[category] / total) * 100);
+      assignedPercentage += percentage;
+      return { category, percentage, count: counts[category], ...CATEGORY_META[category] };
+    });
+  }, [logs, marketplace, timeframe]);
+
+  const signalsProcessed = rootCauseDistribution.reduce((sum, item) => sum + item.count, 0);
 
   // Push Ticket to Linear or Jira
   const handlePushTicket = (
@@ -215,7 +263,7 @@ export default function App() {
 
         {/* Metrics Cards Overview */}
         <MetricsCards
-          totalReturns={1420 + (logs.length - SAMPLE_RETURN_LOGS.length)}
+          totalReturns={signalsProcessed}
           misalignmentRate={18.4}
           publishedTickets={publishedTicketsCount}
           breakdown={profitabilityBreakdown}
@@ -231,7 +279,10 @@ export default function App() {
         {/* Analytics & High Spike SKU Alerts Row */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
           <div className="lg:col-span-2">
-            <RootCauseAnalytics distribution={rootCauseDistribution} />
+            <RootCauseAnalytics
+              distribution={rootCauseDistribution}
+              signalsProcessed={signalsProcessed}
+            />
           </div>
           <div className="lg:col-span-1">
             <HighSpikeSkuAlerts

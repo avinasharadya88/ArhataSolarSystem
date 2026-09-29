@@ -69,11 +69,20 @@ export function calculateProfitability(params: ProfitabilityParams): Profitabili
   // 3. Lever 3: Smart Keep-It / Micro-Refund Policy
   // For items below threshold, reverse logistics shipping ($7.50) + inspection ($4.50) exceeds item residual value.
   // Letting the customer keep the item saves the full unitHandlingCost ($12) minus difference in refund.
-  const lowValueItemRatio = avgItemPrice <= keepItItemValueThreshold ? 0.40 : 0.18;
+  const lowValueItemRatio = Math.min(
+    0.55,
+    Math.max(0.08, (keepItItemValueThreshold / Math.max(avgItemPrice, 1)) * 0.5)
+  );
   const keepItUnits = Math.round(remainingReturns * lowValueItemRatio);
-  // Net savings: saved shipping + warehouse processing minus the payout difference
-  const savedLogisticsPerKeepIt = unitHandlingCost;
-  const keepItLogisticsSaved = Math.round(keepItUnits * savedLogisticsPerKeepIt);
+  // Incremental value vs a standard return: logistics avoided + revenue retained
+  // after the partial refund, less the 15% liquidation recovery forgone.
+  const savedValuePerKeepIt = Math.max(
+    0,
+    unitHandlingCost +
+      avgItemPrice * (1 - keepItRefundPercentage / 100) -
+      avgItemPrice * traditionalSalvageRate
+  );
+  const keepItLogisticsSaved = Math.round(keepItUnits * savedValuePerKeepIt);
 
   const physicalReturnsToProcess = Math.max(0, remainingReturns - keepItUnits);
 

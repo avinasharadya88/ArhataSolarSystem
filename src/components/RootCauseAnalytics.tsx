@@ -10,11 +10,13 @@ interface RootCauseAnalyticsProps {
     color: string;
     description: string;
   }[];
+  signalsProcessed: number;
   onSelectCategory?: (category: ReturnCategory) => void;
 }
 
 export const RootCauseAnalytics: React.FC<RootCauseAnalyticsProps> = ({
   distribution,
+  signalsProcessed,
   onSelectCategory,
 }) => {
   const chartData = distribution.map((item) => ({
@@ -34,7 +36,7 @@ export const RootCauseAnalytics: React.FC<RootCauseAnalyticsProps> = ({
           </p>
         </div>
         <span className="text-xs font-mono text-indigo-400 bg-indigo-500/10 px-2.5 py-1 rounded border border-indigo-500/20 self-start sm:self-auto">
-          1,420 Signals Processed
+          {signalsProcessed.toLocaleString()} Signals Processed
         </span>
       </div>
 
