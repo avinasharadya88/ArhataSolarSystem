@@ -97,6 +97,13 @@ npm run build
 
 The application runs on `http://localhost:3000`.
 
+### Open without a development server
+
+You can also double-click the repository's root `index.html`. It detects the
+`file://` protocol and loads the committed standalone build from `standalone/`.
+After changing the React source, run `npm run build` to refresh both the normal
+Vite production build and the standalone browser bundle.
+
 ### 2. Optional: Run FastAPI Backend Service
 ```bash
 pip install fastapi uvicorn requests pydantic

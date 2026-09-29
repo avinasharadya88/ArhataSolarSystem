@@ -5,12 +5,43 @@
     <link rel="icon" type="image/svg+xml" href="/returns.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Catalog Health & Return Profitability Remediation Hub</title>
+    <style>html,body,#root{min-height:100%;margin:0;background:#020617}</style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   </head>
   <body class="bg-slate-950 text-slate-100 antialiased selection:bg-indigo-500/30 selection:text-indigo-200">
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Vite normally serves and compiles /src/main.tsx. When this file is
+      // opened directly from Finder/Explorer, load the prebuilt classic bundle
+      // instead because browsers block local ES module imports under file://.
+      var shouldLoadStandaloneDashboard =
+        window.location.protocol === 'file:' ||
+        new URLSearchParams(window.location.search).get('standalone') === '1';
+
+      if (shouldLoadStandaloneDashboard) {
+        var standaloneStyles = document.createElement('link');
+        standaloneStyles.rel = 'stylesheet';
+        standaloneStyles.href = './standalone/style.css';
+        document.head.appendChild(standaloneStyles);
+
+        var standaloneApp = document.createElement('script');
+        standaloneApp.src = './standalone/app.js';
+        standaloneApp.onerror = function () {
+          document.getElementById('root').innerHTML =
+            '<main style="font-family:system-ui;padding:32px;color:#e2e8f0;background:#020617;min-height:100vh">' +
+            '<h1>Dashboard bundle is missing</h1>' +
+            '<p>Run <code>npm install</code> and <code>npm run build</code>, then reopen index.html.</p>' +
+            '</main>';
+        };
+        document.body.appendChild(standaloneApp);
+      }
+    </script>
+    <script type="module">
+      if (!window.shouldLoadStandaloneDashboard) {
+        await import('/src/main.tsx');
+      }
+    </script>
   </body>
 </html>
